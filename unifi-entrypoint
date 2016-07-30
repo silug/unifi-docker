@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Based (loosely) on example from https://docs.docker.com/engine/reference/builder/
+
+trap "/etc/init.d/unifi stop" EXIT
+
+/etc/init.d/unifi start
+
+echo "Run 'docker stop <container>' to exit"
+while : ; do sleep 5 ; done
