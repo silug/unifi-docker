@@ -5,12 +5,12 @@ COPY ["unifi-entrypoint", "/usr/local/sbin/unifi-entrypoint"]
 RUN apt update && \
     apt upgrade -y && \
     apt install -y gnupg && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 COPY ["unifi.list", "/etc/apt/sources.list.d/unifi.list"]
 RUN apt update && \
     apt upgrade -y && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50 && \
     apt install -y unifi && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
