@@ -11,7 +11,7 @@ RUN apt update && \
 COPY ["unifi.list", "/etc/apt/sources.list.d/unifi.list"]
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y unifi && \
+    apt install -y unifi pcregrep && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
