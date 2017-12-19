@@ -2,7 +2,11 @@
 
 # Based (loosely) on example from https://docs.docker.com/engine/reference/builder/
 
-/etc/init.d/unifi start || exit $?
+UNIFI_USER="${UNIFI_USER:-unifi}"
+
+chown -Rc "$UNIFI_USER" /var/{lib,log,run}/unifi
+
+UNIFI_USER="$UNIFI_USER" /etc/init.d/unifi start || exit $?
 
 trap "/etc/init.d/unifi stop" EXIT
 
