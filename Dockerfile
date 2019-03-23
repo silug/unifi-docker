@@ -4,7 +4,7 @@ MAINTAINER Steven Pritchard <steven.pritchard@gmail.com>
 COPY ["unifi-entrypoint", "/usr/local/sbin/unifi-entrypoint"]
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y gnupg && \
+    apt install -y gnupg apt-utils apt-transport-https ca-certificates && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
