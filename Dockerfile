@@ -1,4 +1,4 @@
-FROM debian
+FROM debian:9
 MAINTAINER Steven Pritchard <steven.pritchard@gmail.com>
 
 COPY ["unifi-entrypoint", "/usr/local/sbin/unifi-entrypoint"]
