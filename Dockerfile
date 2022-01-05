@@ -1,15 +1,13 @@
 FROM debian:9
-MAINTAINER Steven Pritchard <steven.pritchard@gmail.com>
+LABEL org.opencontainers.image.authors="Steven Pritchard <steven.pritchard@gmail.com>"
 
 COPY ["unifi-entrypoint", "/usr/local/sbin/unifi-entrypoint"]
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y gnupg apt-utils apt-transport-https ca-certificates && \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv C0A52C50 && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-COPY ["unifi.list", "/etc/apt/sources.list.d/unifi.list"]
-RUN apt update && \
+    apt install -y gnupg apt-utils apt-transport-https ca-certificates curl procps && \
+    curl -s https://dl.ui.com/unifi/unifi-repo.gpg | apt-key add - && \
+    echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' > /etc/apt/sources.list.d/unifi.list && \
+    apt update && \
     apt upgrade -y && \
     apt install -y unifi pcregrep && \
     apt-get clean && \
