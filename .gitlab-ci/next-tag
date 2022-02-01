@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+today=$( date +%Y%m%d )
+
+git fetch --tags || :
+
+IFS=$'\n' tags=($( git tag -l ))
+
+tag_seq=0
+for tag in "${tags[@]}" ; do
+  if [[ "$tag" =~ ^$today- ]] ; then
+    this_tag="${tag#*-}"
+    if [ "$this_tag" -gt $tag_seq ] ; then
+      tag_seq="$this_tag"
+    fi
+  fi
+done
+tag_seq=$(( tag_seq+1 ))
+
+echo "TAG=${today}-${tag_seq}${CI_COMMIT_SHORT_SHA:+"-$CI_COMMIT_SHORT_SHA"}"
