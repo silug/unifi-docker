@@ -15,9 +15,11 @@ RUN set -e ; \
         curl \
         procps \
         --no-install-recommends ; \
+    echo 'deb https://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list ; \
     echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' > /etc/apt/sources.list.d/unifi.list ; \
     curl -s https://dl.ui.com/unifi/unifi-repo.gpg | apt-key add - ; \
     apt-get update ; \
+    apt-get install -y openjdk-11-jre-headless --no-install-recommends ; \
     apt-get install -y unifi --no-install-recommends ; \
     apt-get clean ; \
     rm -rf /var/lib/apt/lists/*
