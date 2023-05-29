@@ -5,6 +5,9 @@ SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 COPY ["unifi-entrypoint", "/usr/local/sbin/unifi-entrypoint"]
 # hadolint ignore=DL3008
 RUN set -e ; \
+    sed -i \
+        -e 's/\<\(deb\|security\)\(\.debian\.org\)\>/archive\2/' \
+        -e 's/\<\(stretch\)\(-updates\)\>/\1-proposed\2/' /etc/apt/sources.list ; \
     apt-get update ; \
     apt-get upgrade -y ; \
     apt-get install -y \
@@ -15,7 +18,7 @@ RUN set -e ; \
         curl \
         procps \
         --no-install-recommends ; \
-    echo 'deb https://ftp.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list ; \
+    echo 'deb https://archive.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list ; \
     echo 'deb https://www.ui.com/downloads/unifi/debian stable ubiquiti' > /etc/apt/sources.list.d/unifi.list ; \
     curl -s https://dl.ui.com/unifi/unifi-repo.gpg | apt-key add - ; \
     apt-get update ; \
